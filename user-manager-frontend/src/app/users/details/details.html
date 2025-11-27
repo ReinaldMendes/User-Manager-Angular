@@ -1,0 +1,18 @@
+<div *ngIf="user">
+  <h2>{{user.name}}</h2>
+  <p><strong>Email:</strong> {{user.email}}</p>
+  <p><strong>Idade:</strong> {{user.age || '-' }} — {{ ageLabel(user.age) }}</p>
+  <p><strong>Status:</strong> {{user.status}}</p>
+
+  <div>
+    <strong>Permissões:</strong>
+    <mat-chip-listbox>
+      <mat-chip-option *ngFor="let p of user.permissions">
+        {{ p }}
+      </mat-chip-option>
+    </mat-chip-listbox>
+  </div>
+
+  <button mat-stroked-button [routerLink]="['/users/edit', user.id]">Editar</button>
+  <button mat-button routerLink="/users">Voltar</button>
+</div>

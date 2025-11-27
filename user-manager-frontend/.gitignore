@@ -1,0 +1,35 @@
+# Compiled output
+dist/
+out-tsc/
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Angular
+.angular/
+.angular/cache/
+.angular/ssl/
+.angular/stats.json
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Env
+*.env
+.env.local
+.env.development
+.env.production
+
+# Logs
+*.log
+
+# Compiled SCSS cache
+.sass-cache/

@@ -1,0 +1,123 @@
+<div class="page-container">
+
+  <!-- Cabeçalho -->
+  <header class="header-card">
+    <h1>Gerenciamento de Usuários</h1>
+
+    <button mat-flat-button color="primary" routerLink="/users/new" class="btn-new">
+      <mat-icon>add</mat-icon>
+      Novo Usuário
+    </button>
+  </header>
+
+  <!-- Card principal -->
+  <div class="main-card">
+
+    <!-- Filtros -->
+    <div class="filters-grid">
+      
+      <mat-form-field appearance="outline">
+        <mat-label>Pesquisar</mat-label>
+        <input matInput placeholder="Nome ou Email" [formControl]="search">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Status</mat-label>
+        <mat-select [formControl]="status">
+          <mat-option value="todos">Todos</mat-option>
+          <mat-option value="ativo">Ativo</mat-option>
+          <mat-option value="inativo">Inativo</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Faixa etária</mat-label>
+        <mat-select [formControl]="ageRange">
+          <mat-option value="todos">Todos</mat-option>
+          <mat-option value="18-30">18–30</mat-option>
+          <mat-option value="31-50">31–50</mat-option>
+          <mat-option value="50+">50+</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="loading" class="loading-container">
+      <mat-spinner diameter="48"></mat-spinner>
+    </div>
+
+    <!-- Tabela -->
+    <div class="table-wrapper" *ngIf="!loading">
+
+      <table mat-table [dataSource]="users" class="styled-table mat-elevation-z8">
+
+        <!-- Nome -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Nome </th>
+          <td mat-cell *matCellDef="let u" class="clickable" (click)="goDetails(u.id)">
+            <span class="cell-primary">{{u.name}}</span>
+          </td>
+        </ng-container>
+
+        <!-- Email -->
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef> Email </th>
+          <td mat-cell *matCellDef="let u">{{u.email}}</td>
+        </ng-container>
+
+        <!-- Idade -->
+        <ng-container matColumnDef="age">
+          <th mat-header-cell *matHeaderCellDef> Idade </th>
+          <td mat-cell *matCellDef="let u">{{u.age || '-'}}</td>
+        </ng-container>
+
+        <!-- Status -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef> Status </th>
+          <td mat-cell *matCellDef="let u">
+            <span class="status-tag" 
+              [ngClass]="u.status === 'ativo' ? 'tag-active' : 'tag-inactive'">
+              {{u.status}}
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- Ações -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Ações </th>
+          <td mat-cell *matCellDef="let u" class="action-buttons">
+
+            <button mat-icon-button color="primary" [routerLink]="['/users', u.id]">
+              <mat-icon>visibility</mat-icon>
+            </button>
+
+            <button mat-icon-button color="accent" [routerLink]="['/users/edit', u.id]">
+              <mat-icon>edit</mat-icon>
+            </button>
+
+            <button mat-icon-button color="warn" (click)="confirmDelete(u)">
+              <mat-icon>delete</mat-icon>
+            </button>
+
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+      </table>
+
+    </div>
+
+    <!-- Paginação -->
+    <mat-paginator
+      [length]="total"
+      [pageSize]="limit"
+      [pageSizeOptions]="[5, 10, 20]"
+      (page)="load($event.pageIndex + 1)">
+    </mat-paginator>
+
+  </div>
+
+</div>

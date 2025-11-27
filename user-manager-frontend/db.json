@@ -1,0 +1,35 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Ana Silva",
+      "email": "ana.silva@example.com",
+      "age": 28,
+      "status": "ativo",
+      "permissions": [
+        "admin",
+        "editor"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Carlos Souza",
+      "email": "carlos.souza@example.com",
+      "age": 45,
+      "status": "inativo",
+      "permissions": [
+        "viewer"
+      ]
+    },
+    {
+      "id": null,
+      "name": "Joaquim",
+      "email": "joaquim@gmail.com",
+      "age": 30,
+      "status": "ativo",
+      "permissions": [
+        "viewer"
+      ]
+    }
+  ]
+}

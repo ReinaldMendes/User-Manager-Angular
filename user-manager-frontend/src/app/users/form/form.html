@@ -1,0 +1,47 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+
+  <mat-form-field>
+    <input matInput placeholder="Nome" formControlName="name">
+    <mat-error *ngIf="form.controls.name.invalid && form.controls.name.touched">
+      <span *ngIf="form.controls.name.errors?.['required']">Nome é obrigatório</span>
+      <span *ngIf="form.controls.name.errors?.['minlength']">Mínimo 3 caracteres</span>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Email" formControlName="email">
+    <mat-error *ngIf="form.controls.email.invalid && form.controls.email.touched">
+      <span *ngIf="form.controls.email.errors?.['required']">Email é obrigatório</span>
+      <span *ngIf="form.controls.email.errors?.['email']">Email inválido</span>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput type="number" placeholder="Idade" formControlName="age">
+    <mat-hint>Opcional (≥ 18)</mat-hint>
+    <mat-error *ngIf="form.controls.age.invalid">Idade mínima é 18</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select placeholder="Status" formControlName="status">
+      <mat-option value="ativo">Ativo</mat-option>
+      <mat-option value="inativo">Inativo</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <label>Permissões (pelo menos 1)</label>
+  <div *ngFor="let p of permissionsList">
+    <mat-checkbox [value]="p" (change)="onPermChange($event)">
+      {{ p }}
+    </mat-checkbox>
+  </div>
+
+  <div *ngIf="form.controls.permissions.invalid && form.controls.permissions.touched">
+    Selecione pelo menos 1 permissão
+  </div>
+
+  <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid">
+    {{ isEdit ? 'Atualizar' : 'Criar' }}
+  </button>
+
+</form>
