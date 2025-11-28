@@ -6,8 +6,8 @@
     "start": "ng serve --port 4200",
     "start:api": "json-server --watch db.json --port 3000",
     "start:all": "concurrently \"npm run start:api\" \"npm start\"",
-    "build": "ng build",
-    "test": "ng test"
+    "build": "ng build --configuration production",
+    "test": "ng test" 
   },
   "prettier": {
     "printWidth": 100,
