@@ -33,3 +33,4 @@ Thumbs.db
 
 # Compiled SCSS cache
 .sass-cache/
+.vercel
