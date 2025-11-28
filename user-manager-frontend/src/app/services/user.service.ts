@@ -13,9 +13,9 @@ export class UserService {
   list(params?: any): Observable<User[]> {
     return this.http.get<User[]>(this.api, { params });
   }
-  // simple authentication against mock JSON: finds user by email
-  authenticate(email: string): Observable<User | null> {
-    return this.http.get<User[]>(this.api, { params: { email } }).pipe(
+  authenticate(email: string, password: string): Observable<User | null> {
+    // Querying by both email and password on the mock server
+    return this.http.get<User[]>(this.api, { params: { email, password } }).pipe(
       map(arr => (arr && arr.length ? arr[0] : null))
     );
   }

@@ -1,18 +1,49 @@
-<div *ngIf="user">
-  <h2>{{user.name}}</h2>
-  <p><strong>Email:</strong> {{user.email}}</p>
-  <p><strong>Idade:</strong> {{user.age || '-' }} — {{ ageLabel(user.age) }}</p>
-  <p><strong>Status:</strong> {{user.status}}</p>
+<div class="page-container" *ngIf="user">
 
-  <div>
-    <strong>Permissões:</strong>
-    <mat-chip-listbox>
-      <mat-chip-option *ngFor="let p of user.permissions">
-        {{ p }}
-      </mat-chip-option>
-    </mat-chip-listbox>
+  <div class="header">
+    <h1>Detalhes do Usuário</h1>
+
+    <div class="header-actions">
+      <button mat-stroked-button color="primary" [routerLink]="['/users/edit', user.id]">
+        Editar
+      </button>
+
+      <button mat-flat-button routerLink="/users">
+        Voltar
+      </button>
+    </div>
   </div>
 
-  <button mat-stroked-button [routerLink]="['/users/edit', user.id]">Editar</button>
-  <button mat-button routerLink="/users">Voltar</button>
+  <div class="card user-card">
+    <h2>{{ user.name }}</h2>
+
+    <p><strong>Email:</strong> {{ user.email }}</p>
+
+    <p>
+      <strong>Idade:</strong>
+      {{ user.age || '-' }}
+      — <span class="age-label">{{ ageLabel(user.age) }}</span>
+    </p>
+
+    <p>
+      <strong>Status:</strong>
+      <span class="status-chip" [ngClass]="{
+        'active': user.status === 'ativo',
+        'inactive': user.status === 'inativo'
+      }">
+        {{ user.status }}
+      </span>
+    </p>
+
+    <div class="permissions">
+      <strong>Permissões:</strong>
+      <mat-chip-listbox>
+        <mat-chip-option *ngFor="let p of user.permissions">
+          {{ p }}
+        </mat-chip-option>
+      </mat-chip-listbox>
+    </div>
+
+  </div>
+
 </div>

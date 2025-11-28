@@ -1,0 +1,87 @@
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 90;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 14px 24px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  animation: fadeIn 240ms ease-out;
+
+  @media (max-width: 600px) {
+    padding: 12px 16px;
+
+    .nav {
+      display: none;
+    }
+  }
+}
+
+.brand .logo {
+  font-weight: 800;
+  font-size: 1.1rem;
+  letter-spacing: -0.4px;
+  color: var(--text);
+  text-decoration: none;
+  transition: 150ms ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.nav {
+  .nav-link {
+    margin-right: 18px;
+    font-weight: 500;
+    color: var(--text);
+    text-decoration: none;
+    opacity: 0.85;
+    padding: 6px 2px;
+    transition: 150ms ease;
+
+    &:hover {
+      opacity: 1;
+      color: var(--primary);
+    }
+
+    &.active {
+      color: var(--primary);
+      font-weight: 600;
+    }
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  button {
+    transition: 180ms ease;
+    border-radius: 8px;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.06);
+      transform: translateY(-2px);
+    }
+  }
+}
+
+.logout-btn mat-icon {
+  color: #ef4444;
+}
+
+.theme-btn mat-icon {
+  transition: 180ms;
+  color: var(--text);
+}

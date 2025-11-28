@@ -28,6 +28,10 @@ body{margin:0;font-family:Roboto, 'Helvetica Neue', Arial, sans-serif;background
 .app-footer .container{display:flex;align-items:center;max-width:1200px;margin:0 auto;width:100%}
 .app-footer .spacer{flex:1}
 
+/* Snackbars custom */
+.mat-snack-bar-container.snack-success { background: linear-gradient(90deg, rgba(16,185,129,1), rgba(34,197,94,1)); color: white }
+.mat-snack-bar-container.snack-error { background: linear-gradient(90deg, rgba(239,68,68,1), rgba(220,38,38,1)); color: white }
+
 /* Responsive tweaks */
 @media (max-width:768px){
 	.nav{display:none}

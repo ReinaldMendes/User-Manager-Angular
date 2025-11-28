@@ -11,8 +11,8 @@ import { MatButtonModule } from '@angular/material/button';
     <h2>{{ data?.title || 'Confirmar' }}</h2>
     <p>{{ data?.message || 'Deseja continuar?' }}</p>
     <div class="actions">
-      <button mat-button (click)="close(false)">Cancelar</button>
-      <button mat-flat-button color="warn" (click)="close(true)">Excluir</button>
+      <button mat-button (click)="close(false)">{{ data?.cancelLabel || 'Cancelar' }}</button>
+      <button mat-flat-button [color]="data?.confirmColor || 'warn'" (click)="close(true)">{{ data?.confirmLabel || 'Confirmar' }}</button>
     </div>
   `
 })

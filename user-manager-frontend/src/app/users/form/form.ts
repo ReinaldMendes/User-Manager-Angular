@@ -26,6 +26,7 @@ import { User } from '../../models/user.models';
     MatSnackBarModule
   ],
   templateUrl: './form.html'
+  ,styleUrls: ['./form.scss']
 })
 export class UserFormComponent implements OnInit {
 
@@ -33,6 +34,7 @@ export class UserFormComponent implements OnInit {
     id: FormControl<number | null>;
     name: FormControl<string | null>;
     email: FormControl<string | null>;
+    password: FormControl<string | null>;
     age: FormControl<number | null>;
     status: FormControl<string | null>;
     permissions: FormControl<string[] | null>;
@@ -46,6 +48,7 @@ export class UserFormComponent implements OnInit {
       Validators.required,
       Validators.email
     ]),
+    password: new FormControl<string | null>(null),
     age: new FormControl<number | null>(null, [
       Validators.min(18)
     ]),
@@ -59,7 +62,7 @@ export class UserFormComponent implements OnInit {
   constructor(
     private userService: UserService,
     private route: ActivatedRoute,
-    private router: Router,
+    public router: Router,
     private snack: MatSnackBar
   ) {}
 
@@ -69,8 +72,15 @@ export class UserFormComponent implements OnInit {
     if (id && id !== 'new') {
       this.isEdit = true;
       this.userService.getById(+id).subscribe((u: User) => {
-        this.form.patchValue(u);
+        // patchValue will map matching controls; includes password if present
+        this.form.patchValue(u as any);
       });
+    }
+
+    // If creating a new user, require password
+    if (!this.isEdit) {
+      this.form.controls.password.setValidators([Validators.required, Validators.minLength(6)]);
+      this.form.controls.password.updateValueAndValidity();
     }
   }
 
@@ -80,29 +90,42 @@ export class UserFormComponent implements OnInit {
     const data = this.form.getRawValue() as User;
 
     if (this.isEdit) {
-      this.userService.update(data.id!, data).subscribe(() => {
-        this.snack.open('Usuário atualizado', 'Fechar', { duration: 2000 });
-        this.router.navigate(['/users']);
-      });
+      // If password not provided in edit, preserve existing password
+      if (!data.password) {
+        this.userService.getById(data.id!).subscribe(existing => {
+          const merged = { ...data, password: existing.password } as User;
+          this.userService.update(data.id!, merged).subscribe(() => {
+            this.snack.open('Usuário atualizado', 'Fechar', { duration: 2000, panelClass: ['snack-success'] });
+            this.router.navigate(['/users']);
+          });
+        });
+      } else {
+        this.userService.update(data.id!, data).subscribe(() => {
+          this.snack.open('Usuário atualizado', 'Fechar', { duration: 2000, panelClass: ['snack-success'] });
+          this.router.navigate(['/users']);
+        });
+      }
     } else {
       this.userService.create(data).subscribe(() => {
-        this.snack.open('Usuário criado', 'Fechar', { duration: 2000 });
+        this.snack.open('Usuário criado', 'Fechar', { duration: 2000, panelClass: ['snack-success'] });
         this.router.navigate(['/users']);
       });
     }
   }
 
-  onPermChange(event: any) {
-    const current = this.form.controls.permissions.value ?? [];
+  onPermChange(permission: string, checked: boolean) {
+  const current = this.form.value.permissions || [];
 
-    if (event.checked) {
-      this.form.controls.permissions.setValue([...current, event.source.value]);
-    } else {
-      this.form.controls.permissions.setValue(
-        current.filter(p => p !== event.source.value)
-      );
-    }
+  let updated;
 
-    this.form.controls.permissions.markAsTouched();
+  if (checked) {
+    updated = [...current, permission];
+  } else {
+    updated = current.filter(p => p !== permission);
   }
+
+  this.form.controls.permissions.setValue(updated);
+  this.form.controls.permissions.markAsTouched();
+}
+
 }

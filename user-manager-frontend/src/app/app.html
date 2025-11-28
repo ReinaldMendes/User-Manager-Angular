@@ -1,28 +1,11 @@
 <div class="app-shell" [class.dark]="isDark">
-	<header class="app-header">
-		<div class="brand">
-			<a routerLink="/" class="logo">User Manager</a>
-		</div>
-		<nav class="nav">
-			<a routerLink="/users" class="nav-link">Usuários</a>
-			<a routerLink="/login" class="nav-link">Login</a>
-		</nav>
-		<div class="header-actions">
-			<button mat-icon-button (click)="toggleTheme()" aria-label="Alternar tema">
-				<mat-icon>{{ isDark ? 'light_mode' : 'dark_mode' }}</mat-icon>
-			</button>
-		</div>
-	</header>
+  <app-header></app-header>
 
-	<main class="app-main">
-		<router-outlet></router-outlet>
-	</main>
+  <main class="app-main">
+    <div class="page-fade">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
 
-	<footer class="app-footer">
-		<div class="container">
-			<span>© {{ title() }} - 2025</span>
-			<span class="spacer"></span>
-			<span>Feito com ♥</span>
-		</div>
-	</footer>
+  <app-footer></app-footer>
 </div>

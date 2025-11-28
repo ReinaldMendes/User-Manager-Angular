@@ -1,0 +1,15 @@
+<header class="app-header">
+  <div class="brand">
+    <a routerLink="/users" class="logo">Sistema Iris — User Manager</a>
+  </div>
+
+  <div class="actions">
+    <button mat-icon-button (click)="toggle()" aria-label="Alternar tema" class="theme-btn">
+      <mat-icon>{{ isDark ? 'light_mode' : 'dark_mode' }}</mat-icon>
+    </button>
+
+    <button mat-icon-button (click)="logout()" aria-label="Sair" class="logout-btn">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </div>
+</header>

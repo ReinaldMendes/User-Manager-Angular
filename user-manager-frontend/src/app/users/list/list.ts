@@ -64,7 +64,6 @@ export class UsersListComponent implements OnInit {
   status = new FormControl('todos');
   ageRange = new FormControl('todos');
 
-  // paginator defaults
   pageSize = 5;
   pageIndex = 0;
   total = 0;
@@ -75,23 +74,19 @@ export class UsersListComponent implements OnInit {
   
 
   ngOnInit() {
-    // watch inputs for reactive filtering
     this.search.valueChanges.subscribe(()=> this.applyFilters());
     this.status.valueChanges.subscribe(()=> this.applyFilters());
     this.ageRange.valueChanges.subscribe(()=> this.applyFilters());
 
     this.load();
   }
-
-  // load raw data (paginação e total ficam calculadas localmente)
   load() {
     this.loading = true;
-    const params: any = {}; // se usar json-server com query: enviar params
+    const params: any = {};
     this.userService.list(params).subscribe({
       next: (res: User[]) => {
         this.dataSource.data = res || [];
         this.total = res.length;
-        // attach paginator & sort after data arrives
         setTimeout(()=> {
           if (this.paginator) this.dataSource.paginator = this.paginator;
           if (this.sort) this.dataSource.sort = this.sort;
@@ -107,14 +102,12 @@ export class UsersListComponent implements OnInit {
     });
   }
 
-  // MatTable filtering wrapper
   applyFilters() {
     const q = this.search.value?.trim().toLowerCase() || '';
     const st = this.status.value || 'todos';
     const ar = this.ageRange.value || 'todos';
 
     this.dataSource.filterPredicate = (user: User, filter: string) => {
-      // filter param not used because we use closure
       const matchesSearch = !q || user.name.toLowerCase().includes(q) || user.email.toLowerCase().includes(q);
       const matchesStatus = st === 'todos' || user.status === st;
       let matchesAge = true;
@@ -127,48 +120,39 @@ export class UsersListComponent implements OnInit {
       return matchesSearch && matchesStatus && matchesAge;
     };
 
-    // force filter to trigger predicate
     this.dataSource.filter = '' + Math.random();
-    // reset to page 0
     if (this.paginator) this.paginator.firstPage();
   }
 
-  // Navigate to details
-  goDetails(id?: number) {
-    if (!id) return;
-    this.router.navigate(['/users', id]);
+  goDetails(id?: any) {
+    const parsed = typeof id === 'string' ? parseInt(id, 10) : id;
+    if (!parsed && parsed !== 0) return;
+    this.router.navigate(['/users', parsed]);
   }
 
-  // Open edit form
   goEdit(id?: number) {
     if (!id) return;
     this.router.navigate(['/users/edit', id]);
   }
 
-  // Confirm delete flow
   confirmDelete(user: User) {
     const ref = this.dialog.open(ConfirmDialogComponent, { data: { title: 'Confirmar exclusão', message: `Deseja excluir ${user.name}?` } });
     ref.afterClosed().subscribe(result => {
       if (result === true) {
         this.userService.delete(user.id!).subscribe({
           next: () => {
-            this.snack.open('Usuário excluído', 'Fechar', { duration: 2000 });
+            this.snack.open('Usuário excluído', 'Fechar', { duration: 2000, panelClass: ['snack-success'] });
             this.load();
           },
-          error: () => this.snack.open('Erro ao excluir', 'Fechar', { duration: 2000 })
+          error: () => this.snack.open('Erro ao excluir', 'Fechar', { duration: 2000, panelClass: ['snack-error'] })
         });
       }
     });
   }
-
-  // paginator event handler (se quiser manipular dados server-side)
   onPage(e: PageEvent) {
     this.pageSize = e.pageSize;
     this.pageIndex = e.pageIndex;
-    // se for server side -> load com params _page/_limit; hoje usamos client-side
   }
-
-  // proxy para ThemeService — usado pelo template
   get isDark() {
     return this.theme.isDark;
   }

@@ -1,19 +1,29 @@
-<div class="login-card">
-  <h2>Login</h2>
+<div class="login-root">
+  <div class="login-card util-col">
 
-  <form [formGroup]="form" (ngSubmit)="submit()">
-    <mat-form-field appearance="outline" class="full">
-      <input matInput placeholder="Email" formControlName="email" />
-    </mat-form-field>
-
-    <mat-form-field appearance="outline" class="full">
-      <input matInput type="password" placeholder="Senha" formControlName="password" />
-    </mat-form-field>
-
-    <div class="actions">
-      <button mat-flat-button color="primary" type="submit" [disabled]="loading">Entrar</button>
+    <div class="hero">
+      <h2>Bem-vindo de volta</h2>
+      <p class="subtitle">Acesse sua conta para gerenciar usuários</p>
     </div>
 
-    <div class="error" *ngIf="error">{{ error }}</div>
-  </form>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" autofocus />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>Senha</mat-label>
+        <input matInput type="password" formControlName="password" />
+      </mat-form-field>
+
+      <div class="actions">
+        <button mat-flat-button color="primary" type="submit" [disabled]="loading">
+          Entrar
+        </button>
+      </div>
+
+      <div class="error" *ngIf="error">{{ error }}</div>
+    </form>
+  </div>
 </div>

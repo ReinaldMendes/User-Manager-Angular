@@ -31,13 +31,14 @@ export class LoginComponent {
     if (this.form.invalid) return;
     this.loading = true;
     this.error = '';
-    const { email } = this.form.value as any;
-    this.userService.authenticate(email).subscribe({
+    const { email, password } = this.form.value as any;
+    this.userService.authenticate(email, password).subscribe({
       next: user => {
         this.loading = false;
         if (user) {
-          // naive login: store user in sessionStorage
+          // naive login: store user in sessionStorage and mark auth
           sessionStorage.setItem('user', JSON.stringify(user));
+          localStorage.setItem('auth', 'true');
           this.router.navigate(['/users']);
         } else {
           this.error = 'Credenciais inválidas';

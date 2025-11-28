@@ -1,0 +1,38 @@
+/* Theme variables and mixins */
+:root {
+  --bg: #f5f7fb;
+  --surface: #ffffff;
+  --text: #0f1724;
+  --primary: #4f46e5;
+  --border: #e6e9ef;
+  --card: #ffffff;
+  --muted: #6b7280;
+}
+
+.dark, .theme-dark {
+  --bg: #0f1724;
+  --surface: #111217;
+  --text: #e6eef8;
+  --primary: #7c3aed;
+  --border: #26272b;
+  --card: #17171b;
+  --muted: #9aa3b2;
+}
+
+@mixin card() {
+  background: var(--card);
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(6, 11, 35, 0.06);
+}
+
+@mixin subtle-fade {
+  animation: fadeIn 240ms ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.util-row { display:flex; gap:12px; align-items:center; }
+.util-col { display:flex; flex-direction:column; gap:12px; }
