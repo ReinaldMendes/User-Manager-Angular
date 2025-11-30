@@ -11,7 +11,6 @@
   background: var(--surface);
   border-bottom: 1px solid var(--border);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 
@@ -39,46 +38,41 @@
   }
 }
 
-.nav {
-  .nav-link {
-    margin-right: 18px;
-    font-weight: 500;
-    color: var(--text);
-    text-decoration: none;
-    opacity: 0.85;
-    padding: 6px 2px;
-    transition: 150ms ease;
-
-    &:hover {
-      opacity: 1;
-      color: var(--primary);
-    }
-
-    &.active {
-      color: var(--primary);
-      font-weight: 600;
-    }
-  }
-}
-
 .actions {
   display: flex;
   align-items: center;
   gap: 8px;
 
   button {
-    transition: 180ms ease;
+    transition: 180ms ease, transform 150ms ease;
     border-radius: 8px;
+    padding: 6px;
 
     &:hover {
       background: rgba(0, 0, 0, 0.06);
       transform: translateY(-2px);
     }
+
+    &:active {
+      transform: translateY(0);
+      background: rgba(0,0,0,0.12);
+    }
   }
 }
 
-.logout-btn mat-icon {
-  color: #ef4444;
+.logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  mat-icon {
+    color: #ef4444;
+    transition: color 150ms;
+  }
+
+  &:hover mat-icon {
+    color: #b91c1c;
+  }
 }
 
 .theme-btn mat-icon {

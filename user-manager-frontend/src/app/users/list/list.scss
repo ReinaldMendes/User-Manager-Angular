@@ -1,4 +1,3 @@
-/* CONTAINER GERAL */
 .page-container {
   padding: 30px;
   min-height: 100vh;
@@ -11,7 +10,6 @@
   }
 }
 
-/* HEADER SUPERIOR */
 .header {
   display: flex;
   justify-content: space-between;
@@ -57,7 +55,6 @@
   }
 }
 
-/* CARD PRINCIPAL */
 .card {
   background: var(--surface);
   padding: 28px;
@@ -87,7 +84,6 @@
   }
 }
 
-/* FILTROS */
 .filters {
   display: flex;
   flex-wrap: wrap;
@@ -109,7 +105,6 @@
   }
 }
 
-/* WRAPPER DA TABELA */
 .table-wrapper {
   margin-top: 10px;
   background: var(--card);
@@ -125,7 +120,6 @@
   }
 }
 
-/* TABELA */
 table {
   width: 100%;
 
@@ -141,7 +135,6 @@ table {
   }
 }
 
-/* CELULA CLICÁVEL DO NOME */
 .clickable {
   cursor: pointer;
   font-weight: 600;
@@ -152,7 +145,6 @@ table {
   }
 }
 
-/* STATUS CHIPS */
 .status-chip {
   padding: 5px 12px;
   border-radius: 20px;
@@ -171,7 +163,6 @@ table {
   }
 }
 
-/* AÇÕES */
 .actions button {
   margin-right: 6px;
   border-radius: 8px;
@@ -183,14 +174,12 @@ table {
   }
 }
 
-/* PAGINAÇÃO */
 mat-paginator {
   margin-top: 14px;
   background: var(--surface);
   border-radius: 14px;
 }
 
-/* ANIMAÇÃO */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(4px); }
   to { opacity: 1; transform: translateY(0); }
