@@ -1,4 +1,4 @@
-// user.model.js (CORRIGIDO)
+// user.model.js
 import { Schema, model } from "mongoose";
 import bcrypt from "bcrypt";
 
@@ -10,10 +10,27 @@ const userSchema = new Schema(
       trim: true,
     },
     email: {
-      // ... (restante do email)
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      lowercase: true,
+      validate: {
+        validator(v) {
+          return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(v);
+        },
+        message: "Por favor, insira um e-mail válido.",
+      },
     },
     password: {
-      // ... (restante da senha)
+      type: String,
+      required: true,
+      validate: {
+        validator(v) {
+          return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(v);
+        },
+        message: "A senha não atende aos requisitos de segurança.",
+      },
     },
     role: {
       type: String,
@@ -21,25 +38,26 @@ const userSchema = new Schema(
       default: "USER",
     },
     age: {
-        type: Number,
-        default: 0, 
-        min: 0,
-        max: 150
+      type: Number,
+      default: null,
+      min: 0,
+      max: 150,
     },
     status: {
-        type: String,
-        enum: ['active', 'inactive'],
-        default: 'active'
+      type: String,
+      enum: ['active', 'inactive'],
+      default: 'active'
     },
     permissions: {
-        type: [String],
-        default: ['read']
+      type: [String],
+      default: ['read']
     }
   },
   {
     timestamps: true,
   }
 );
+
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     return next();

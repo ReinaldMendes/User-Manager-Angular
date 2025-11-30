@@ -1,4 +1,4 @@
-// user-form.component.ts (AGORA ATUALIZADO)
+// user-form.component.ts
 
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -13,8 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { User } from '../../models/user.models';
 
-// 💡 IMPORTS ADICIONADOS DO RXJS para o switchMap
-import { Observable, switchMap, of } from 'rxjs'; 
+import { Observable, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-user-form',
@@ -30,36 +29,19 @@ import { Observable, switchMap, of } from 'rxjs';
     MatButtonModule,
     MatSnackBarModule
   ],
-  templateUrl: './form.html'
-  ,styleUrls: ['./form.scss']
+  templateUrl: './form.html',
+  styleUrls: ['./form.scss']
 })
 export class UserFormComponent implements OnInit {
-// ... (restante do código até o ngOnInit() é o mesmo)
 
-  form = new FormGroup<{
-    id: FormControl<number | null>;
-    name: FormControl<string | null>;
-    email: FormControl<string | null>;
-    password: FormControl<string | null>;
-    age: FormControl<number | null>;
-    status: FormControl<string | null>;
-    permissions: FormControl<string[] | null>;
-  }>({
-    id: new FormControl<number | null>(null),
-    name: new FormControl<string | null>('', [
-      Validators.required,
-      Validators.minLength(3)
-    ]),
-    email: new FormControl<string | null>('', [
-      Validators.required,
-      Validators.email
-    ]),
+  form = new FormGroup({
+    id: new FormControl<string | null>(null),
+    name: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl<string | null>(null),
-    age: new FormControl<number | null>(null, [
-      Validators.min(18)
-    ]),
-    status: new FormControl<string | null>('ativo', Validators.required),
-    permissions: new FormControl<string[] | null>([], Validators.required)
+    age: new FormControl<number | null>(null),
+    status: new FormControl<string>('ativo'),
+    permissions: new FormControl<string[]>([])
   });
 
   permissionsList = ['admin', 'editor', 'viewer'];
@@ -77,71 +59,68 @@ export class UserFormComponent implements OnInit {
 
     if (id && id !== 'new') {
       this.isEdit = true;
-      this.userService.getById(+id).subscribe((u: User) => {
-        // patchValue will map matching controls; includes password if present
-        this.form.patchValue(u as any);
-      });
-    }
 
-    // If creating a new user, require password
-    if (!this.isEdit) {
+      this.userService.getById(id).subscribe(user => {
+        this.form.patchValue({
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          password: null, // Não preenche senha
+          age: user.age,
+          status: user.status,
+          permissions: user.permissions || []
+        });
+      });
+    } else {
+      // password obrigatório no create
       this.form.controls.password.setValidators([Validators.required, Validators.minLength(6)]);
       this.form.controls.password.updateValueAndValidity();
     }
   }
 
-  // 💡 FUNÇÃO SUBMIT ATUALIZADA COM switchMap
   submit() {
     if (this.form.invalid) return;
 
     const data = this.form.getRawValue() as User;
 
     if (this.isEdit) {
-      // 1. Define o Observable de atualização (updateObs)
-      let updateObs: Observable<any>;
 
-      // Se a senha não foi fornecida na edição, precisamos buscar a antiga primeiro
+      let obs: Observable<any>;
+
+      // Buscar senha antiga se o campo estiver vazio
       if (!data.password) {
-        // Busca o usuário existente -> combina a senha antiga -> faz o update
-        updateObs = this.userService.getById(data.id!).pipe(
-          switchMap(existing => {
-            const merged = { ...data, password: existing.password } as User;
-            return this.userService.update(data.id!, merged);
+        obs = this.userService.getById(data.id!).pipe(
+          switchMap(oldUser => {
+            return this.userService.update(data.id!, {
+              ...data,
+              password: oldUser.password
+            });
           })
         );
       } else {
-        // Se a senha foi alterada, faça o update direto
-        updateObs = this.userService.update(data.id!, data);
+        obs = this.userService.update(data.id!, data);
       }
 
-      // 2. Subscreve ao updateObs e trata o sucesso
-      updateObs.subscribe(() => {
-        this.snack.open('Usuário atualizado', 'Fechar', { duration: 2000, panelClass: ['snack-success'] });
+      obs.subscribe(() => {
+        this.snack.open('Usuário atualizado', 'Fechar', { duration: 2000 });
         this.router.navigate(['/users']);
       });
 
     } else {
-      // LÓGICA DE CRIAÇÃO (Já estava correta)
+      // Create
       this.userService.create(data).subscribe(() => {
-        this.snack.open('Usuário criado', 'Fechar', { duration: 2000, panelClass: ['snack-success'] });
+        this.snack.open('Usuário criado', 'Fechar', { duration: 2000 });
         this.router.navigate(['/users']);
       });
     }
   }
 
   onPermChange(permission: string, checked: boolean) {
-  const current = this.form.value.permissions || [];
+    const current = this.form.value.permissions || [];
+    const updated = checked
+      ? [...current, permission]
+      : current.filter(p => p !== permission);
 
-  let updated;
-
-  if (checked) {
-    updated = [...current, permission];
-  } else {
-    updated = current.filter(p => p !== permission);
+    this.form.controls.permissions.setValue(updated);
   }
-
-  this.form.controls.permissions.setValue(updated);
-  this.form.controls.permissions.markAsTouched();
-}
-
 }

@@ -6,7 +6,7 @@
       "email": "ana.silva@example.com",
       "password": "senhaAna123",
       "age": 35,
-      "status": "ativo",
+      "status": "inativo",
       "permissions": [
         "admin",
         "editor"
