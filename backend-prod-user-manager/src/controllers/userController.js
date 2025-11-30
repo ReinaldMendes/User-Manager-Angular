@@ -34,7 +34,6 @@ export const getUserById = async (req, res) => {
     res.status(500).json({ message: 'Erro no servidor', error: error.message });
   }
 };
-
 export const updateUser = async (req, res) => {
   try {
     const { name, email, role, age, status, permissions } = req.body;
@@ -49,9 +48,9 @@ export const updateUser = async (req, res) => {
     user.email = email || user.email;
     user.role = role || user.role;
   
-    if (age !== undefined) user.age = age;
-    if (status) user.status = status;
-    if (permissions) user.permissions = permissions;
+    if (age !== null && age !== undefined) user.age = age;
+    user.status = status || user.status;
+    user.permissions = permissions || user.permissions;
 
     const updatedUser = await user.save();
     const out = updatedUser.toObject();

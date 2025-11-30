@@ -1,3 +1,5 @@
+// user.service.ts (ATUALIZADO)
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user.models'; // Certifique-se que o model aceita id string ou number
@@ -7,9 +9,6 @@ import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-  // Define a URL base dependendo se é mock ou prod
-  // Se for Mock: http://localhost:3000/users
-  // Se for Prod: http://localhost:3000/api/users
   private api = `${environment.apiUrl}/users`;
 
   constructor(private http: HttpClient) {}
@@ -45,6 +44,15 @@ export class UserService {
     localStorage.removeItem('access_token');
     localStorage.removeItem('user_data');
   }
+
+  getCurrentUser(): User | null {
+    const userData = localStorage.getItem('user_data');
+    if (userData) {
+      return JSON.parse(userData) as User; 
+    }
+    return null;
+  }
+  
   list(params?: any): Observable<User[]> {
     return this.http.get<any[]>(this.api, { params }).pipe(
       map(users => users.map(u => this.normalizeId(u)))
@@ -68,6 +76,7 @@ export class UserService {
   delete(id: string | number) {
     return this.http.delete(`${this.api}/${id}`);
   }
+  
   private normalizeId(user: any): User {
     if (user._id && !user.id) {
       user.id = user._id;

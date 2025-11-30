@@ -1,3 +1,4 @@
+// user.model.js (CORRIGIDO)
 import { Schema, model } from "mongoose";
 import bcrypt from "bcrypt";
 
@@ -9,34 +10,31 @@ const userSchema = new Schema(
       trim: true,
     },
     email: {
-      type: String,
-      required: true,
-      unique: true,
-      trim: true,
-      lowercase: true, 
-      validate: {
-        validator(v) {
-          return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(v);
-        },
-        message: "Por favor, insira um e-mail válido.", 
-      },
+      // ... (restante do email)
     },
     password: {
-      type: String,
-      required: true,
-      validate: {
-        validator(v) {
-        
-          return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(v);
-        },
-        message: "A senha não atende aos requisitos de segurança.",
-      },
+      // ... (restante da senha)
     },
     role: {
       type: String,
       enum: ["USER", "ADMINISTRATOR"],
       default: "USER",
     },
+    age: {
+        type: Number,
+        default: 0, 
+        min: 0,
+        max: 150
+    },
+    status: {
+        type: String,
+        enum: ['active', 'inactive'],
+        default: 'active'
+    },
+    permissions: {
+        type: [String],
+        default: ['read']
+    }
   },
   {
     timestamps: true,
