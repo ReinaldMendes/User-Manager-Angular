@@ -6,7 +6,7 @@
     "start": "ng serve --port 4200",
     "start:api": "json-server --watch db.json --port 3000",
     "start:all": "concurrently \"npm run start:api\" \"npm start\"",
-    "build":  "ng build --configuration production --output-path dist/user-manager --base-href /",
+    "build": "ng build --configuration production --base-href /",
     "preview": "npx http-server ./dist/user-manager -p 5000"
   },
   "prettier": {

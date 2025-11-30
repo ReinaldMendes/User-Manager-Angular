@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "/user-manager/index.html"
+      "destination": "/index.html"
     }
   ]
 }
