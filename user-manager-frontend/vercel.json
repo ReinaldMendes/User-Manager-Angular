@@ -4,13 +4,5 @@
       "source": "/(.*)",
       "destination": "/index.html"
     }
-  ],
-  "build": {
-    "env": {
-      "NODE_ENV": "production"
-    }
-  },
-  "config": {
-    "outputDirectory": "dist/user-manager"
-  }
+  ]
 }
