@@ -25,7 +25,7 @@ Inclui **tela de login funcional** integrada ao mock **JSON Server** e **deploy 
 
 O projeto foi publicado utilizando **Vercel** e está acessível em:
 
-👉 **[https://user-manager-angular-beta.vercel.app/](https://user-manager-angular-xi.vercel.app/login)**
+👉 **[https://user-manager-angular-beta.vercel.app/](https://user-manager-angular-ten.vercel.app/login)**
 
 > Obs.: Como o JSON Server roda localmente, apenas as telas que não dependem do backend funcionarão online, a menos que você suba também sua API mock.
 
