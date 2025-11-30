@@ -29,12 +29,16 @@ export class UserDetailsComponent implements OnInit {
   constructor(private route: ActivatedRoute, private userService: UserService) {}
 
   ngOnInit() {
-    const raw = this.route.snapshot.paramMap.get('id');
-    const id = raw ? parseInt(raw, 10) : NaN;
+    // 💡 CORREÇÃO: Pega o ID da rota diretamente como string.
+    // Mongoose IDs são strings, não números.
+    const id = this.route.snapshot.paramMap.get('id');
     
-    if (!isNaN(id)) {
+    if (id) {
+      // Chama o serviço com o ID como string
       this.user$ = this.userService.getById(id);
     }
+    // Se 'id' for null/vazio (ex: na rota /users/details sem ID), user$ fica undefined.
+    // O erro "NaN" não será mais gerado.
   }
 
   ageLabel(age?: number) {

@@ -1,8 +1,8 @@
-// user.service.ts (ATUALIZADO)
+// user.service.ts (ATUALIZADO E COMPATÍVEL)
 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { User } from '../models/user.models'; // Certifique-se que o model aceita id string ou number
+import { User } from '../models/user.models';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
@@ -59,7 +59,11 @@ export class UserService {
     );
   }
 
-  getById(id: string | number) {
+  /**
+   * 💡 AJUSTE: O ID agora aceita 'string | number' para compatibilidade com o frontend,
+   * mas é convertido para string na requisição HTTP.
+   */
+  getById(id: string | number) { 
     return this.http.get<any>(`${this.api}/${id}`).pipe(
       map(u => this.normalizeId(u))
     );
@@ -69,11 +73,17 @@ export class UserService {
     return this.http.post<User>(this.api, user);
   }
 
-  update(id: string | number, user: User) {
+  /**
+   * 💡 AJUSTE: O ID agora aceita 'string | number'.
+   */
+  update(id: string | number, user: User) { 
     return this.http.put<User>(`${this.api}/${id}`, user);
   }
 
-  delete(id: string | number) {
+  /**
+   * 💡 AJUSTE: O ID agora aceita 'string | number'.
+   */
+  delete(id: string | number) { 
     return this.http.delete(`${this.api}/${id}`);
   }
   
