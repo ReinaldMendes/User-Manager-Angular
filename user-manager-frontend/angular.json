@@ -21,7 +21,7 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
-            "outputPath": "dist",  // ⬅️ ADIÇÃO CRUCIAL PARA SIMPLIFICAR O CAMINHO
+            "outputPath": "dist", /* ⬅️ CORREÇÃO para simplificar o caminho no Vercel (dist/) */
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
@@ -49,7 +49,14 @@
                   "maximumError": "8kB"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              /* ⬅️ ADIÇÃO CRUCIAL PARA FORÇAR A SUBSTITUIÇÃO DO AMBIENTE */
+              "fileReplacements": [ 
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
             },
             "development": {
               "optimization": false,
