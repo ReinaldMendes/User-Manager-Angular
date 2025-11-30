@@ -7,7 +7,10 @@
   ],
   "build": {
     "env": {
-      "NG_BUILD_OUTPUT_PATH": "dist/user-manager"
+      "NODE_ENV": "production"
     }
+  },
+  "config": {
+    "outputDirectory": "dist/user-manager"
   }
 }
