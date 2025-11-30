@@ -1,8 +1,6 @@
 export const environment = {
   production: true,
-  // Se for rodar a API localmente para testar 'prod', use localhost:3000/api
-  // Se for deploy na Vercel/Render, coloque a URL final: 'https://sua-api.onrender.com/api'
-  apiUrl: 'http://localhost:3000/api', 
-  authApiUrl: 'http://localhost:3000/api/auth/login',
+  apiUrl: 'https://user-manager-angular.onrender.com/api', 
+  authApiUrl: 'https://user-manager-angular.onrender.com/api/auth/login',
   useMockLogic: false
 };
