@@ -1,4 +1,4 @@
-/* Theme variables and mixins */
+/* ------------ THEME VARIABLES ------------ */
 :root {
   --bg: #f5f7fb;
   --surface: #ffffff;
@@ -19,6 +19,7 @@
   --muted: #9aa3b2;
 }
 
+/* ------------ MIXINS ------------ */
 @mixin card() {
   background: var(--card);
   border-radius: 12px;
@@ -34,5 +35,51 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-.util-row { display:flex; gap:12px; align-items:center; }
-.util-col { display:flex; flex-direction:column; gap:12px; }
+/* ------------ DROPDOWNS (UX Premium) ------------ */
+.mat-mdc-select-panel,
+.cdk-overlay-pane {
+  &:has(.mat-mdc-select-panel-wrap) {
+
+    .mat-mdc-select-panel-wrap {
+      background-color: var(--surface) !important;
+      color: var(--text) !important;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.18) !important;
+      border-radius: 10px !important;
+      padding: 4px 0 !important;
+    }
+
+    .mdc-list-item {
+      color: var(--text) !important;
+      background-color: var(--surface) !important;
+      font-size: 15px !important;
+      padding: 10px 14px !important;
+      border-radius: 8px;
+
+      &:hover {
+        background-color: rgba(79, 70, 229, 0.12) !important;
+      }
+
+      &.mdc-list-item--selected {
+        background-color: rgba(79, 70, 229, 0.20) !important;
+        color: var(--primary) !important;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+.mat-mdc-select-arrow,
+.mat-mdc-select-trigger {
+  color: var(--text) !important;
+}
+
+/* Small helpers for cards */
+.card-base {
+  @include card();
+  padding: 16px;
+}
+
+/* theme-specific helpers */
+.theme-dark .card-base {
+  box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+}

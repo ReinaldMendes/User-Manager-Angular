@@ -1,41 +1,281 @@
-
-// Include theming for Angular Material with `mat.theme()`.
-// This Sass mixin will define CSS variables that are used for styling Angular Material
-// components according to the Material 3 design spec.
-// Learn more about theming and how to use it for your application's
-// custom components at https://material.angular.dev/guide/theming
-@use '@angular/material' as mat;
-
 @use './styles/_theme' as *;
 
-html {
-  @include mat.theme((
-    color: (
-      primary: mat.$azure-palette,
-      tertiary: mat.$blue-palette,
-    ),
-    typography: Roboto,
-    density: 0,
-  ));
+:root {
+  --bg: #f5f7fb;
+  --surface: #ffffff;
+  --text: #0f1724;
+  --primary: #4f46e5;
+  --border: #e6e9ef;
+  --card: #ffffff;
+  --muted: #6b7280;
 }
 
 body {
-  // Default the application to a light color theme. This can be changed to
-  // `dark` to enable the dark color theme, or to `light dark` to defer to the
-  // user's system settings.
-  color-scheme: light;
-
-  // Set a default background, font and text colors for the application using
-  // Angular Material's system-level CSS variables. Learn more about these
-  // variables at https://material.angular.dev/guide/system-variables
-  background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-body-medium);
-
-  // Reset the user agent margin.
   margin: 0;
+  font-family: Roboto, "Helvetica Neue", Arial, sans-serif;
+  height: 100%;
+  background-color: var(--bg);
+  color: var(--text);
+  color-scheme: light;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.45;
+  font-size: 15px;
 }
-/* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+*, *::before, *::after { box-sizing: inherit; }
+
+
+/* ================================
+   BUTTONS
+================================ */
+button:not([mat-icon-button]):not([mat-menu-trigger]),
+[mat-raised-button],
+[mat-flat-button] {
+  color: white;
+  background-color: var(--primary) !important;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.95;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 6px 20px rgba(79,70,229,0.16);
+  }
+}
+
+[mat-stroked-button],
+[mat-button]:not([mat-icon-button]) {
+  color: var(--primary);
+  border-color: var(--primary);
+
+  &:hover {
+    background-color: rgba(79, 70, 229, 0.08) !important;
+  }
+}
+
+
+/* ================================
+   FORM FIELDS
+================================ */
+[matInput],
+mat-form-field,
+.mat-mdc-form-field {
+  color: var(--text) !important;
+  width: 100%;
+  font-size: 15px;
+
+  .mat-mdc-form-field-label {
+    color: var(--muted) !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.2px;
+  }
+
+  .mdc-text-field__input {
+    color: var(--text) !important;
+    font-size: 15px !important;
+    padding: 12px 12px !important;
+    border-radius: 10px !important;
+    background: transparent;
+    letter-spacing: 0.3px;
+  }
+
+  .mat-mdc-form-field-underline::after {
+    border-color: var(--primary) !important;
+  }
+
+  .mat-mdc-form-field-focus-overlay {
+    background: rgba(79,70,229,0.06) !important;
+    border-radius: 8px;
+  }
+}
+
+::placeholder {
+  color: var(--muted) !important;
+  opacity: 0.85;
+}
+
+.mdc-text-field__input,
+.mat-mdc-form-field-label,
+.mdc-floating-label {
+  word-break: break-word;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/* ================================
+   SELECT DROPDOWN (PAINEL)
+================================ */
+
+/* Painel principal */
+.mat-mdc-select-panel,
+.cdk-overlay-pane {
+  &:has(.mat-mdc-select-panel-wrap) {
+    z-index: 1200 !important;
+    max-height: 360px !important;
+
+    .mat-mdc-select-panel-wrap {
+      background: var(--surface) !important;
+      color: var(--text) !important;
+      border-radius: 10px !important;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.18) !important;
+      padding: 6px 0 !important;
+    }
+
+    .mdc-list-item {
+      color: var(--text) !important;
+      font-size: 15px !important;
+      padding: 10px 16px !important;
+      border-radius: 8px;
+      margin: 2px 8px;
+
+      &:hover {
+        background: rgba(79,70,229,0.10) !important;
+      }
+
+      &.mdc-list-item--selected {
+        background: rgba(79,70,229,0.18) !important;
+        color: var(--primary) !important;
+        font-weight: 700 !important;
+      }
+    }
+  }
+}
+
+.mat-mdc-select-arrow,
+.mat-mdc-select-trigger {
+  color: var(--text) !important;
+  opacity: 0.95;
+}
+
+
+/* ================================
+   PAGINATOR
+================================ */
+[matPaginator],
+.mat-mdc-paginator,
+.mat-mdc-paginator-container {
+  background: var(--surface) !important;
+  color: var(--text) !important;
+  border-top: 1px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 8px;
+
+  .mat-mdc-paginator-page-size-label,
+  .mat-mdc-paginator-range-label {
+    color: var(--text) !important;
+    margin: 0 12px !important;
+    font-size: 14px !important;
+    font-weight: 600;
+  }
+
+  button {
+    color: var(--primary) !important;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    &:disabled {
+      opacity: 0.35;
+    }
+
+    &:not(:disabled):hover {
+      background-color: rgba(79, 70, 229, 0.08) !important;
+    }
+  }
+}
+
+
+/* ================================
+   DARK MODE
+================================ */
+.dark, .theme-dark {
+  --bg: #0f1724;
+  --surface: #111217;
+  --text: #e6eef8;
+  --primary: #7c3aed;
+  --border: #26272b;
+  --card: #17171b;
+  --muted: #9aa3b2;
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+  }
+
+  [matInput],
+  mat-form-field,
+  .mat-mdc-form-field {
+    .mat-mdc-form-field-label { color: var(--muted) !important; }
+    .mdc-text-field__input {
+      background-color: transparent !important;
+      color: var(--text) !important;
+    }
+  }
+
+  [matPaginator],
+  .mat-mdc-paginator,
+  .mat-mdc-paginator-container {
+    background-color: var(--card) !important;
+    color: var(--text) !important;
+    border-top-color: var(--border) !important;
+  }
+
+  .mat-mdc-select-panel .mdc-list-item {
+    color: var(--text) !important;
+  }
+}
+
+
+/* ================================
+   LAYOUT UTILS
+================================ */
+.util-row { display:flex; gap:12px; align-items:center; }
+.util-col { display:flex; flex-direction:column; gap:12px; }
+
+.mat-mdc-form-field .mdc-text-field,
+.mat-mdc-form-field .mdc-text-field__input,
+.mat-mdc-form-field .mdc-floating-label {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/* ================================
+   🔥 FIX DEFINITIVO — DROPDOWN REALMENTE OPACO
+================================ */
+
+/* Superfície do menu (era transparente!) */
+.mdc-menu-surface {
+  background-color: var(--surface) !important;
+  border-radius: 10px !important;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.24) !important;
+  backdrop-filter: blur(8px);
+}
+
+/* Dark */
+.theme-dark .mdc-menu-surface,
+.dark .mdc-menu-surface {
+  background-color: var(--card) !important;
+}

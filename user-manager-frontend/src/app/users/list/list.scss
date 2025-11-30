@@ -1,7 +1,7 @@
 .page-container {
   padding: 30px;
   min-height: 100vh;
-  transition: 0.3s ease;
+  transition: 0.28s ease;
   background: var(--bg);
   animation: fadeIn 260ms ease-out;
 
@@ -10,27 +10,26 @@
   }
 }
 
+/* header */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   padding: 22px 28px;
   background: var(--surface);
   border-radius: 18px;
-
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-
   margin-bottom: 26px;
-  transition: 200ms ease;
+  transition: 220ms ease;
 
   h1 {
     margin: 0;
     font-size: 1.7rem;
     font-weight: 800;
     color: var(--text);
+    letter-spacing: 0.2px;
   }
 
   .header-actions {
@@ -38,32 +37,23 @@
     align-items: center;
     gap: 14px;
 
-    .btn-new:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
-    }
+    .btn-new:hover { transform: translateY(-2px); }
 
     .theme-toggle mat-icon {
       color: var(--text);
       font-size: 26px;
-      transition: 200ms;
+      transition: 180ms;
     }
-  }
-
-  &:hover {
-    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
   }
 }
 
+/* card */
 .card {
   background: var(--surface);
   padding: 28px;
   border-radius: 18px;
-
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
   backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-
   animation: fadeIn 220ms ease-in;
 
   h2 {
@@ -84,89 +74,96 @@
   }
 }
 
+/* filters */
 .filters {
   display: flex;
   flex-wrap: wrap;
   gap: 18px;
   margin-bottom: 20px;
+  align-items: flex-end;
 
   .filter {
-    min-width: 260px;
+    min-width: 200px;
     flex: 1;
+
+    &:first-child { flex: 2; }
   }
 
   @media (max-width: 900px) {
     flex-direction: column;
     gap: 12px;
+    align-items: stretch;
 
-    .filter {
-      min-width: 100%;
-    }
+    .filter { min-width: 100%; &:first-child { flex: 1; } }
   }
 }
 
+/* table wrapper */
 .table-wrapper {
-  margin-top: 10px;
+  margin-top: 20px;
   background: var(--card);
   border-radius: 14px;
-  padding: 12px;
-
+  padding: 0;
   box-shadow: 0 4px 14px rgba(0,0,0,0.05);
   overflow: hidden;
   animation: fadeIn 200ms ease-out;
 
-  @media (max-width: 900px) {
-    overflow-x: auto;
-  }
+  @media (max-width: 900px) { overflow-x: auto; }
 }
 
+/* table */
 table {
   width: 100%;
+  border-collapse: collapse;
 
   mat-header-cell {
     font-weight: 700;
     background: var(--surface);
     font-size: 14px;
     color: var(--text);
+    padding: 16px 12px !important;
+    letter-spacing: 0.2px;
   }
+
+  mat-cell { padding: 14px 12px !important; }
 
   td {
     color: var(--text);
+    border-bottom: 1px solid var(--border);
+    font-size: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
+/* clickable */
 .clickable {
   cursor: pointer;
   font-weight: 600;
   color: var(--primary);
 
-  &:hover {
-    text-decoration: underline;
-  }
+  &:hover { text-decoration: underline; }
 }
 
+/* status chip */
 .status-chip {
   padding: 5px 12px;
   border-radius: 20px;
   font-size: 12px;
-  font-weight: bold;
+  font-weight: 700;
   text-transform: capitalize;
 
-  &.active {
-    background: rgba(34, 197, 94, 0.20);
-    color: #22c55e;
-  }
-
-  &.inactive {
-    background: rgba(239, 68, 68, 0.20);
-    color: #ef4444;
-  }
+  &.active { background: rgba(34,197,94,0.20); color: #16a34a; }
+  &.inactive { background: rgba(239,68,68,0.20); color: #ef4444; }
 }
 
+/* actions */
 .actions button {
   margin-right: 6px;
   border-radius: 8px;
   transition: 150ms ease;
+  padding: 8px 10px;
 
   &:hover {
     transform: translateY(-2px);
@@ -174,13 +171,15 @@ table {
   }
 }
 
+/* paginator */
 mat-paginator {
   margin-top: 14px;
   background: var(--surface);
   border-radius: 14px;
+  padding: 0;
+  border-top: 1px solid var(--border);
+  box-shadow: none;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+/* animation */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }

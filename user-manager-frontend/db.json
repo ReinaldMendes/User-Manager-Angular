@@ -55,6 +55,17 @@
       "permissions": [
         "admin"
       ]
+    },
+    {
+      "id": null,
+      "name": "Jessica",
+      "email": "jessica@gmail.com",
+      "password": "123456",
+      "age": 35,
+      "status": "inativo",
+      "permissions": [
+        "admin"
+      ]
     }
   ]
 }

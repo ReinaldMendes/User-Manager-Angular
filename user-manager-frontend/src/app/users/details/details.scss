@@ -2,81 +2,58 @@
   padding: 30px;
   background: var(--bg);
   min-height: 100vh;
+  animation: fadeIn 180ms ease-in;
 }
 
-/* HEADER */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: white;
+  background: var(--surface);
   padding: 22px 28px;
   border-radius: 18px;
-  box-shadow: 0 3px 10px rgba(0,0,0,.08);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.06);
   margin-bottom: 26px;
 
   h1 {
     margin: 0;
     font-size: 26px;
     font-weight: 800;
+    color: var(--text);
+    letter-spacing: 0.2px;
   }
 
-  .header-actions {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
+  .header-actions { display:flex; align-items:center; gap:14px; }
 }
 
-/* CARD */
 .user-card {
   background: var(--card);
   padding: 28px;
   border-radius: 18px;
   box-shadow: 0 6px 18px rgba(6,11,35,0.06);
   animation: fadeIn 180ms ease-in;
+  color: var(--text);
+  line-height: 1.6;
 
-  h2 {
-    font-size: 22px;
-    font-weight: 700;
-    margin-bottom: 16px;
-  }
-
-  p {
-    margin: 8px 0;
-    font-size: 15px;
-  }
+  h2 { font-size: 22px; font-weight: 700; margin-bottom: 16px; color: var(--text); }
+  p { margin: 8px 0; font-size: 15px; color: var(--text); }
 }
 
-/* AGE LABEL */
-.age-label {
-  font-weight: 600;
-  opacity: .8;
-}
+.age-label { font-weight: 600; opacity: .85; color: var(--text); }
 
-/* STATUS CHIP */
 .status-chip {
   padding: 5px 12px;
   border-radius: 20px;
   font-size: 12px;
   font-weight: bold;
 
-  &.active {
-    background: #d1fae5;
-    color: #065f46;
-  }
-
-  &.inactive {
-    background: #fee2e2;
-    color: #b91c1c;
-  }
+  &.active { background: #d1fae5; color: #065f46; }
+  &.inactive { background: #fee2e2; color: #b91c1c; }
 }
 
-/* PERMISSIONS */
-.permissions {
-  margin-top: 18px;
-}
+.permissions { margin-top: 18px; }
 
+/* mobile tweaks */
 @media (max-width: 480px) {
   .page-container { padding: 16px; }
   .header h1 { font-size: 20px; }

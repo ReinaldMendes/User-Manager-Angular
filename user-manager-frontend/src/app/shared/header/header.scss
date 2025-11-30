@@ -15,6 +15,7 @@
   -webkit-backdrop-filter: blur(12px);
 
   animation: fadeIn 240ms ease-out;
+  transition: background 0.2s ease, border-color 0.2s ease;
 
   @media (max-width: 600px) {
     padding: 12px 16px;
@@ -27,26 +28,28 @@
 
 .brand .logo {
   font-weight: 800;
-  font-size: 1.1rem;
-  letter-spacing: -0.4px;
+  font-size: 1.15rem;
+  letter-spacing: -0.3px;
   color: var(--text);
   text-decoration: none;
-  transition: 150ms ease;
+  transition: opacity 150ms ease;
 
   &:hover {
     opacity: 0.8;
   }
 }
 
+/* Ações (tema, logout) */
 .actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 
   button {
     transition: 180ms ease, transform 150ms ease;
-    border-radius: 8px;
-    padding: 6px;
+    border-radius: 10px;
+    padding: 8px;
+    background: transparent;
 
     &:hover {
       background: rgba(0, 0, 0, 0.06);
@@ -57,25 +60,36 @@
       transform: translateY(0);
       background: rgba(0,0,0,0.12);
     }
+
+    mat-icon {
+      color: var(--text);
+      transition: color 150ms ease, opacity 150ms ease;
+    }
   }
 }
 
+/* Botão de Logout */
 .logout-btn {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
 
   mat-icon {
-    color: #ef4444;
-    transition: color 150ms;
+    color: #ef4444 !important;
   }
 
   &:hover mat-icon {
-    color: #b91c1c;
+    color: #dc2626 !important;
+  }
+
+  span {
+    font-weight: 600;
+    color: var(--text);
   }
 }
 
+/* Botão de tema */
 .theme-btn mat-icon {
-  transition: 180ms;
-  color: var(--text);
+  color: var(--text) !important;
+  transition: 180ms ease;
 }

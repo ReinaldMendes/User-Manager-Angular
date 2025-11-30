@@ -6,10 +6,6 @@
   background: var(--bg);
   padding: 28px;
   animation: fadeIn 300ms ease-out;
-
-  @media (max-width: 600px) {
-    padding: 16px;
-  }
 }
 
 .login-card {
@@ -19,16 +15,11 @@
   border-radius: 14px;
   background: var(--surface);
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.10);
-  animation: fadeIn 250ms ease-out, float 8s infinite ease-in-out;
   border: 1px solid var(--border);
+  animation: fadeIn 250ms ease-out;
 }
 
-@keyframes float {
-  0%   { transform: translateY(0px); }
-  50%  { transform: translateY(-4px); }
-  100% { transform: translateY(0px); }
-}
-
+/* hero */
 .hero {
   text-align: center;
   margin-bottom: 18px;
@@ -38,7 +29,7 @@
     font-size: 1.8rem;
     color: var(--text);
     font-weight: 600;
-    letter-spacing: -0.5px;
+    letter-spacing: -0.2px;
   }
 
   .subtitle {
@@ -48,10 +39,64 @@
   }
 }
 
-.full {
+.full { width: 100%; }
+
+/* ================================
+   INPUTS MAIS FINOS — ESTILO LUXO
+================================ */
+.login-card mat-form-field {
   width: 100%;
+  margin-bottom: 14px;
+
+  .mdc-text-field {
+    height: 44px !important;             /* --> mais fino */
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    border-radius: 10px !important;
+  }
+
+  .mdc-text-field__input {
+    padding: 6px 0 !important;           /* --> reduz a altura interna */
+    font-size: 14.5px !important;
+    color: var(--text) !important;
+  }
+
+  .mat-mdc-form-field-label {
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    color: var(--muted) !important;
+  }
+
+  .mat-mdc-form-field-focus-overlay {
+    border-radius: 10px !important;
+  }
 }
 
+/* Remove aquela borda extra sem afetar o material */
+.login-card .mdc-text-field--outlined .mdc-notched-outline__leading,
+.login-card .mdc-text-field--outlined .mdc-notched-outline__trailing {
+  border-width: 1px !important;
+}
+
+/* hover clean */
+.login-card .mdc-text-field:hover .mdc-notched-outline__leading,
+.login-card .mdc-text-field:hover .mdc-notched-outline__trailing {
+  border-color: var(--primary) !important;
+  opacity: 0.7;
+}
+
+/* dark mode */
+.theme-dark .login-card mat-form-field .mdc-text-field__input,
+.dark .login-card mat-form-field .mdc-text-field__input {
+  color: var(--text) !important;
+}
+
+.theme-dark .login-card .mdc-text-field--outlined,
+.dark .login-card .mdc-text-field--outlined {
+  background: transparent !important;
+}
+
+/* actions */
 .actions {
   display: flex;
   justify-content: flex-end;
@@ -71,9 +116,19 @@
   }
 }
 
+/* error */
 .error {
   margin-top: 10px;
   color: #d32f2f;
   font-size: 0.9rem;
   text-align: center;
+}
+
+/* inputs dark mode fix */
+.login-card input,
+.login-card mat-form-field,
+.login-card .mdc-text-field__input {
+  color: var(--text) !important;
+  background: transparent !important;
+  letter-spacing: 0.3px;
 }

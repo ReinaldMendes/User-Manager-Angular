@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   padding: 24px;
+  background: transparent;
 }
 
 .user-card {
@@ -14,6 +15,7 @@
   animation: fadeIn 240ms ease-in-out;
 }
 
+/* header */
 .header {
   display: flex;
   justify-content: space-between;
@@ -26,46 +28,50 @@
   font-size: 1.4rem;
   font-weight: 700;
   color: var(--text);
+  letter-spacing: 0.2px;
 }
 
-.header-actions {
-  display: flex;
-  gap: 10px;
-}
+/* actions */
+.header-actions { display:flex; gap:10px; }
 
+/* grid */
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
 }
 
-.full-width {
-  grid-column: 1 / -1;
-}
+/* form controls sizing: make sure inputs respect container */
+.mat-mdc-form-field { width: 100% !important; }
+.mdc-text-field__input { width: 100% !important; box-sizing: border-box; }
 
-.permissions {
-  margin-top: 6px;
-}
+/* full width */
+.full-width { grid-column: 1 / -1; }
 
+/* labels & small text */
 .section-label {
   display: block;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
   font-weight: 600;
-  opacity: 0.85;
+  opacity: 0.9;
+  color: var(--text);
 }
 
-.util-row {
-  margin: 4px 0;
-}
+/* permissions */
+.permissions { margin-top: 6px; }
 
-.error-msg {
-  margin-top: 4px;
-  font-size: 0.85rem;
-  color: #e11d48;
-}
+/* small utilities */
+.util-row { margin: 4px 0; }
+.error-msg { margin-top: 4px; font-size: 0.85rem; color: #e11d48; }
 
+/* responsive */
 @media (max-width: 800px) {
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
+  .form-grid { grid-template-columns: 1fr; }
+}
+
+/* ensure floating label doesn't overflow */
+.mat-mdc-form-field .mdc-floating-label {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
