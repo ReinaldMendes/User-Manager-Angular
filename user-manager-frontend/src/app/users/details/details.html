@@ -1,4 +1,4 @@
-<div class="page-container" *ngIf="user">
+<div class="page-container" *ngIf="user$ | async as user">
 
   <div class="header">
     <h1>Detalhes do Usuário</h1>

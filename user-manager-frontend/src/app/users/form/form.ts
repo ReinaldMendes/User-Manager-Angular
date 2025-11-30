@@ -1,3 +1,5 @@
+// user-form.component.ts (AGORA ATUALIZADO)
+
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -10,6 +12,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { User } from '../../models/user.models';
+
+// 💡 IMPORTS ADICIONADOS DO RXJS para o switchMap
+import { Observable, switchMap, of } from 'rxjs'; 
 
 @Component({
   selector: 'app-user-form',
@@ -29,6 +34,7 @@ import { User } from '../../models/user.models';
   ,styleUrls: ['./form.scss']
 })
 export class UserFormComponent implements OnInit {
+// ... (restante do código até o ngOnInit() é o mesmo)
 
   form = new FormGroup<{
     id: FormControl<number | null>;
@@ -84,28 +90,38 @@ export class UserFormComponent implements OnInit {
     }
   }
 
+  // 💡 FUNÇÃO SUBMIT ATUALIZADA COM switchMap
   submit() {
     if (this.form.invalid) return;
 
     const data = this.form.getRawValue() as User;
 
     if (this.isEdit) {
-      // If password not provided in edit, preserve existing password
+      // 1. Define o Observable de atualização (updateObs)
+      let updateObs: Observable<any>;
+
+      // Se a senha não foi fornecida na edição, precisamos buscar a antiga primeiro
       if (!data.password) {
-        this.userService.getById(data.id!).subscribe(existing => {
-          const merged = { ...data, password: existing.password } as User;
-          this.userService.update(data.id!, merged).subscribe(() => {
-            this.snack.open('Usuário atualizado', 'Fechar', { duration: 2000, panelClass: ['snack-success'] });
-            this.router.navigate(['/users']);
-          });
-        });
+        // Busca o usuário existente -> combina a senha antiga -> faz o update
+        updateObs = this.userService.getById(data.id!).pipe(
+          switchMap(existing => {
+            const merged = { ...data, password: existing.password } as User;
+            return this.userService.update(data.id!, merged);
+          })
+        );
       } else {
-        this.userService.update(data.id!, data).subscribe(() => {
-          this.snack.open('Usuário atualizado', 'Fechar', { duration: 2000, panelClass: ['snack-success'] });
-          this.router.navigate(['/users']);
-        });
+        // Se a senha foi alterada, faça o update direto
+        updateObs = this.userService.update(data.id!, data);
       }
+
+      // 2. Subscreve ao updateObs e trata o sucesso
+      updateObs.subscribe(() => {
+        this.snack.open('Usuário atualizado', 'Fechar', { duration: 2000, panelClass: ['snack-success'] });
+        this.router.navigate(['/users']);
+      });
+
     } else {
+      // LÓGICA DE CRIAÇÃO (Já estava correta)
       this.userService.create(data).subscribe(() => {
         this.snack.open('Usuário criado', 'Fechar', { duration: 2000, panelClass: ['snack-success'] });
         this.router.navigate(['/users']);

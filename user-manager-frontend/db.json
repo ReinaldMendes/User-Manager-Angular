@@ -1,40 +1,60 @@
 {
   "users": [
     {
-      "id": 1,
-      "name": "Ana Silva",
+      "id": "1",
+      "name": "Ana Silva da Costa",
       "email": "ana.silva@example.com",
       "password": "senhaAna123",
       "age": 35,
       "status": "ativo",
-      "permissions": ["admin", "editor"]
+      "permissions": [
+        "admin",
+        "editor"
+      ]
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Carlos Souza",
       "email": "carlos.souza@example.com",
       "password": "senhaCarlos",
       "age": 45,
       "status": "inativo",
-      "permissions": ["viewer"]
+      "permissions": [
+        "viewer"
+      ]
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Joaquim",
       "email": "joaquim@gmail.com",
       "password": "joaquimpwd",
       "age": 30,
       "status": "ativo",
-      "permissions": ["viewer"]
+      "permissions": [
+        "viewer"
+      ]
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "Jurema",
       "email": "jurema@gmail.com",
       "password": "Jurema123",
       "age": 50,
       "status": "ativo",
-      "permissions": ["admin"]
+      "permissions": [
+        "admin"
+      ]
+    },
+    {
+      "id": null,
+      "name": "Jandira Fegali",
+      "email": "jandira123@gamil.com",
+      "password": "1234Pokol",
+      "age": 35,
+      "status": "ativo",
+      "permissions": [
+        "admin"
+      ]
     }
   ]
 }

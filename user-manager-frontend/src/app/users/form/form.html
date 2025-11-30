@@ -1,24 +1,24 @@
 <div class="user-form-root">
   <div class="user-card">
 
-    <div class="header">
-      <h1>{{ isEdit ? 'Editar Usuário' : 'Criar Usuário' }}</h1>
+    <form [formGroup]="form" (ngSubmit)="submit()"> 
 
-      <div class="header-actions">
-        <button mat-stroked-button color="primary" type="button" (click)="router.navigate(['/users'])">
-          Cancelar
-        </button>
+      <div class="header">
+        <h1>{{ isEdit ? 'Editar Usuário' : 'Criar Usuário' }}</h1>
 
-        <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid">
-          {{ isEdit ? 'Atualizar' : 'Criar' }}
-        </button>
+        <div class="header-actions">
+          <button mat-stroked-button color="primary" type="button" (click)="router.navigate(['/users'])">
+            Cancelar
+          </button>
+
+          <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid">
+            {{ isEdit ? 'Atualizar' : 'Criar' }}
+          </button>
+        </div>
       </div>
-    </div>
 
-    <form [formGroup]="form" (ngSubmit)="submit()">
       <div class="form-grid">
 
-        <!-- Nome -->
         <mat-form-field class="full-width">
           <mat-label>Nome</mat-label>
           <input matInput formControlName="name">
@@ -28,7 +28,6 @@
           </mat-error>
         </mat-form-field>
 
-        <!-- Email -->
         <mat-form-field>
           <mat-label>Email</mat-label>
           <input matInput formControlName="email">
@@ -38,14 +37,12 @@
           </mat-error>
         </mat-form-field>
 
-        <!-- Senha -->
         <mat-form-field>
           <mat-label>Senha</mat-label>
           <input matInput type="password" formControlName="password">
           <mat-hint *ngIf="isEdit">Deixe em branco para manter a senha atual</mat-hint>
         </mat-form-field>
 
-        <!-- Idade -->
         <mat-form-field>
           <mat-label>Idade</mat-label>
           <input matInput type="number" formControlName="age">
@@ -53,7 +50,6 @@
           <mat-error *ngIf="form.controls.age.invalid">Idade mínima é 18</mat-error>
         </mat-form-field>
 
-        <!-- Status -->
         <mat-form-field>
           <mat-label>Status</mat-label>
           <mat-select formControlName="status">
@@ -62,7 +58,6 @@
           </mat-select>
         </mat-form-field>
 
-        <!-- Permissões -->
         <div class="permissions full-width">
           <label class="section-label">Permissões</label>
 
@@ -75,13 +70,11 @@
           </div>
 
           <div *ngIf="form.controls.permissions.invalid && form.controls.permissions.touched"
-               class="error-msg">
+              class="error-msg">
             Selecione pelo menos 1 permissão
           </div>
         </div>
 
       </div>
-    </form>
-
-  </div>
+    </form> </div>
 </div>
