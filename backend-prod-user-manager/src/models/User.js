@@ -27,9 +27,9 @@ const userSchema = new Schema(
       required: true,
       validate: {
         validator(v) {
-          return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(v);
+          return typeof v === 'string' && v.trim().length >= 3;
         },
-        message: "A senha não atende aos requisitos de segurança.",
+        message: "A senha deve ter ao menos 3 caracteres.",
       },
     },
     role: {
@@ -44,9 +44,9 @@ const userSchema = new Schema(
       max: 150,
     },
     status: {
-      type: String,
-      enum: ['active', 'inactive'],
-      default: 'active'
+    type: String,
+    enum: ['ativo', 'inativo'],
+    default: 'ativo'
     },
     permissions: {
       type: [String],
