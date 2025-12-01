@@ -1,70 +1,88 @@
 # 📘 Users Management Dashboard – Angular
 
-Painel completo de **gerenciamento de usuários** desenvolvido com **Angular 18**, **Angular Material** e arquitetura moderna usando **Standalone Components**.
-Inclui **tela de login funcional** integrada ao mock **JSON Server** e **deploy final na Vercel**.
+Painel completo de **gerenciamento de usuários** desenvolvido com **Angular 18**, **Angular Material** e arquitetura moderna utilizando **Standalone Components**.
+O projeto inclui autenticação, listagem, edição, filtros avançados e integração dupla: **Mock JSON Server** (experiência ideal do desafio) e **API real em Node + Express** (em produção).
 
 ---
 
 ## 🚀 Funcionalidades
 
-* 🔐 **Tela de Login** (bônus do desafio)
-* 🧩 **Autenticação simples via JSON Server**
+* 🔐 **Tela de Login**
+* 📡 **Integração com API real (produção)**
+* 🧩 **Autenticação baseada em mock (ambiente local)**
 * 🔍 **Pesquisa por nome ou email**
-* 🟢 **Filtro por status** (ativo / inativo)
-* 🎯 **Filtro por faixa etária** (18–30, 31–50, 50+)
+* 🟢 **Filtro por status**
+* 🎯 **Filtro por faixa etária (18–30, 31–50, 50+)**
 * 📄 **Paginação**
-* 👁 **Visualização de detalhes**
-* ✏️ **Edição e criação de usuários**
-* 🗑 **Exclusão com diálogo de confirmação**
+* 👁 **Detalhamento do usuário**
+* ✏️ **Criação e edição**
+* 🗑 **Exclusão com confirmação**
 * ⏳ **Spinner de carregamento**
-* 🧱 Código limpo, organizado e totalmente tipado
+* 🎨 **UI moderna com Angular Material**
+* 🧱 Código limpo, organizado e tipado
 
 ---
 
-## 🌐 Demonstração Online (Deploy)
+## 🌐 Deploy em Produção (Vercel + Render)
 
-O projeto foi publicado utilizando **Vercel** e está acessível em:
+O frontend está hospedado na **Vercel**:
 
-👉 **[https://user-manager-angular-beta.vercel.app/](https://user-manager-angular-ten.vercel.app/login)**
+👉 **[https://user-manager-angular-beta.vercel.app/](https://user-manager-angular-beta.vercel.app/)**
 
-> Obs.: Como o JSON Server roda localmente, apenas as telas que não dependem do backend funcionarão online, a menos que você suba também sua API mock.
+Em ambiente de produção, o projeto **não utiliza o mock** — ele consome a **API real em Node.js + Express**, hospedada no Render:
+
+👉 **[https://user-manager-angular.onrender.com](https://user-manager-angular.onrender.com)**
+
+⚠️ **Importante:** Serviços gratuitos do Render entram em modo sleep após inatividade.
+Isso significa que **a primeira requisição pode demorar 20–40 segundos** para acordar o servidor.
+
+Em produção, a API permite:
+
+✔ Login real
+✔ Listar usuários
+✔ Editar usuários
+✔ Criar usuários
+✔ Excluir usuários
+❌ Visualização de detalhes do usuário (não implementado na API)
 
 ---
 
-## 🔐 Login – Informações Importantes
+## 🔐 Login – Acesso Local (Mock)
 
-A autenticação foi implementada como **bônus** no desafio.
-O login é validado consultando os dados do arquivo:
+Para a **melhor experiência do desafio**, execute o projeto localmente usando o mock JSON Server.
+Neste modo, o login e todas as funcionalidades pedidas no desafio funcionam 100% instantaneamente e todos os dados vêm do arquivo:
 
 ```
 mock/db.json
 ```
 
-Exemplo de usuário válido:
+### Exemplos de usuários reais do mock (escolha qualquer um):
 
-```json
-{
-  "id": 1,
-  "email": "admin@example.com",
-  "password": "123456",
-  "name": "Administrador do Sistema",
-  "permissions": ["admin"]
-}
-```
+| Nome               | Email                                                       | Senha       | Status  |
+| ------------------ | ----------------------------------------------------------- | ----------- | ------- |
+| Ana Silva da Costa | [ana.silva@example.com](mailto:ana.silva@example.com)       | senhaAna123 | inativo |
+| Carlos Souza       | [carlos.souza@example.com](mailto:carlos.souza@example.com) | senhaCarlos | inativo |
+| Joaquim            | [joaquim@gmail.com](mailto:joaquim@gmail.com)               | joaquimpwd  | ativo   |
+| Jurema             | [jurema@gmail.com](mailto:jurema@gmail.com)                 | Jurema123   | ativo   |
+| Jandira Fegali     | [jandira123@gamil.com](mailto:jandira123@gamil.com)         | 1234Pokol   | ativo   |
+| Jessica            | [jessica@gmail.com](mailto:jessica@gmail.com)               | 123456      | inativo |
 
-Use **qualquer email e senha cadastrados no mock** para entrar.
+> Basta usar **qualquer email e senha listados** acima para acessar no ambiente local.
 
 ---
 
 ## 🧰 Tecnologias Utilizadas
 
 * **Angular 18**
+* **Standalone Components**
 * **Angular Material**
 * **RxJS**
 * **TypeScript**
-* **Standalone Components**
-* **JSON Server**
-* **Vercel (Deploy Frontend)**
+* **JSON Server (Mock Local)**
+* **Node.js + Express (Backend real)**
+* **MongoDB**
+* **Render (API em produção)**
+* **Vercel (Frontend em produção)**
 
 ---
 
@@ -78,16 +96,16 @@ src/
     ├── users/
     │   ├── list/        # Lista de usuários
     │   ├── details/     # Tela de detalhes
-    │   └── form/        # Tela de criação/edição
-    ├── services/        # Comunicação com API
-    ├── models/          # Tipagem e interfaces
+    │   └── form/        # Edição/Criação
+    ├── services/        # Comunicação API / Mock
+    ├── models/          # Interfaces
     ├── shared/          # Componentes reutilizáveis
     └── app.routes.ts    # Rotas principais
 ```
 
 ---
 
-## ▶️ Como Rodar o Projeto Localmente
+## ▶️ Como Rodar Localmente (Experiência Recomendada)
 
 ### 1. Instalar dependências
 
@@ -101,22 +119,24 @@ npm install
 npm run start:all
 ```
 
-Isso vai iniciar:
+Isso iniciará:
 
 * Angular → `http://localhost:4200`
 * JSON Server → `http://localhost:3000`
+
+> Neste modo, login, listagem, filtros, edição e exclusão funcionam **100% em tempo real**, com base no mock.
 
 ---
 
 ## 📁 Scripts Úteis
 
-### Apenas o Angular
+### Somente o Angular
 
 ```bash
 ng serve
 ```
 
-### Angular + Mock API
+### Angular + Mock
 
 ```bash
 npm run start:all
@@ -136,7 +156,4 @@ ng build
 Desenvolvedor Backend & Fullstack
 
 🔗 LinkedIn: [https://www.linkedin.com/in/reinald-mendes/](https://www.linkedin.com/in/reinald-mendes/)
-
-
-
 
