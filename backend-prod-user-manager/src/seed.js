@@ -2,90 +2,72 @@ import 'dotenv/config.js';
 import connectDB from './config/db.js';
 import User from './models/User.js';
 import bcrypt from 'bcrypt';
-
-const mockUsers = [
-  {
-    _id: "000000000000000000000001",
-    name: "Ana Silva da Costa",
-    email: "ana.silva@example.com",
-    password: "senhaAna123",
-    age: 35,
-    status: "inativo",
-    permissions: ["admin", "editor"]
-  },
-  {
-    _id: "000000000000000000000002",
-    name: "Carlos Souza",
-    email: "carlos.souza@example.com",
-    password: "senhaCarlos",
-    age: 45,
-    status: "inativo",
-    permissions: ["viewer"]
-  },
-  {
-    _id: "000000000000000000000003",
-    name: "Joaquim",
-    email: "joaquim@gmail.com",
-    password: "joaquimpwd",
-    age: 30,
-    status: "ativo",
-    permissions: ["viewer"]
-  },
-  {
-    _id: "000000000000000000000004",
-    name: "Jurema",
-    email: "jurema@gmail.com",
-    password: "Jurema123",
-    age: 50,
-    status: "ativo",
-    permissions: ["admin"]
-  },
-  {
-    _id: "000000000000000000000005",
-    name: "Jandira Fegali",
-    email: "jandira123@gamil.com",
-    password: "1234Pokol",
-    age: 35,
-    status: "ativo",
-    permissions: ["admin"]
-  },
-  {
-    _id: "000000000000000000000006",
-    name: "Jessica",
-    email: "jessica@gmail.com",
-    password: "123456",
-    age: 35,
-    status: "inativo",
-    permissions: ["admin"]
-  }
-];
+import fs from 'fs/promises';
+import path from 'path';
 
 const seed = async () => {
   await connectDB();
 
-  console.log("🟡 Limpando coleção...");
-  await User.deleteMany({});
-
-  console.log("🟢 Inserindo usuários...");
-
-  for (const u of mockUsers) {
-    const hashed = await bcrypt.hash(u.password, 10);
-
-    await User.create({
-      _id: u._id,
-      name: u.name,
-      email: u.email,
-      password: hashed,
-      age: u.age,
-      status: u.status,
-      permissions: u.permissions,
-      role: "USER"
-    });
-
-    console.log(`✔ Usuário criado: ${u.email}`);
+  // Read frontend mock db.json to keep users in sync
+  const frontDbPath = path.resolve(process.cwd(), '../user-manager-frontend/db.json');
+  let raw;
+  try {
+    raw = await fs.readFile(frontDbPath, 'utf-8');
+  } catch (err) {
+    console.error('Erro ao ler db.json do frontend:', err.message);
+    process.exit(1);
   }
 
-  console.log("🎉 Seed finalizado com sucesso!");
+  const parsed = JSON.parse(raw);
+  const users = parsed.users || [];
+
+  for (let i = 0; i < users.length; i++) {
+    const u = users[i];
+    const email = (u.email || '').toLowerCase();
+    const name = u.name || '';
+    const plainPassword = u.password || `ChangeMe${Math.floor(Math.random()*1000)}`;
+    const age = u.age || 25;
+    const status = u.status || 'ativo';
+    const permissions = u.permissions || [];
+
+    // Ensure password meets basic complexity by adding a digit/uppercase if needed
+    let pwd = plainPassword;
+    if (!/[A-Z]/.test(pwd)) pwd = pwd.charAt(0).toUpperCase() + pwd.slice(1);
+    if (!/\d/.test(pwd)) pwd = pwd + '1';
+    if (pwd.length < 8) pwd = pwd + 'A1a1';
+
+    const hashed = await bcrypt.hash(pwd, 10);
+
+    // Determine role: make the first user ADMINISTRATOR if no admin exists
+    let role = 'USER';
+    if (i === 0) role = 'ADMINISTRATOR';
+
+    // Upsert using raw collection to avoid Mongoose validation issues
+    const update = {
+      $set: {
+        name,
+        email,
+        password: hashed,
+        role,
+        age,
+        status,
+        permissions,
+        updatedAt: new Date(),
+      },
+      $setOnInsert: {
+        createdAt: new Date(),
+      }
+    };
+
+    try {
+      await User.collection.updateOne({ email }, update, { upsert: true });
+      console.log(`Seeded user: ${email} (role: ${role}, age: ${age}, status: ${status})`);
+    } catch (err) {
+      console.error(`Erro ao inserir usuário ${email}:`, err.message);
+    }
+  }
+
+  console.log('Seed finalizado.');
   process.exit(0);
 };
 
