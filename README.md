@@ -47,7 +47,7 @@ A aplicação atende os requisitos do desafio:
 
 O frontend está hospedado na **Vercel**:
 
-👉 **[https://user-manager-angular-ten.vercel.app/](https://user-manager-angular-ten.vercel.app/login/)**
+👉 **[https://user-manager-angular-ten.vercel.app/](https://user-manager-angular-ten.vercel.app/login)**
 
 Em ambiente de produção, o projeto **não utiliza o mock** — ele consome a **API real em Node.js + Express**, hospedada no Render:
 
