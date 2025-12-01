@@ -1,9 +1,29 @@
 # 📘 Users Management Dashboard – Angular
 
-Painel completo de **gerenciamento de usuários** desenvolvido com **Angular 18**, **Angular Material** e arquitetura moderna utilizando **Standalone Components**.
-O projeto inclui autenticação, listagem, edição, filtros avançados e integração dupla: **Mock JSON Server** (experiência ideal do desafio) e **API real em Node + Express** (em produção).
+**Entrega do Desafio Técnico** — Painel completo de **gerenciamento de usuários** desenvolvido com **Angular 18**, **Angular Material** e arquitetura moderna utilizando **Standalone Components**.
+ O projeto inclui autenticação, listagem, edição, filtros avançados e integração dupla: **Mock JSON Server** (experiência ideal do desafio) e **API real em Node + Express** (em produção).
 
 ---
+
+## 🚀 Resumo da Entrega (o que foi pedido)
+
+A aplicação atende os requisitos do desafio:
+
+* Tela de listagem com pesquisa, filtros (status, faixa etária), paginação e ordenação.
+* Formulário reativo para criação/edição (validações: nome, e-mail, idade ≥18, pelo menos 1 permissão).
+* Página de detalhes (permits em chips e label de “idade estimada”).
+* Feedback visual: loading / snackbar / confirmação para exclusão.
+* Deploy (frontend) e instruções no README.
+
+---
+
+## 🏆 Bônus incluídos
+
+* **Tela de Login** (implementada — mock local e integração com API real).
+* **API real (Node + Express + MongoDB)** hospedada no **Render** para ambiente de produção (endpoints: login, listar, criar, editar, excluir).
+  *Observação:* Render tem cold start → primeira requisição pode levar **20–40s**.
+* Em produção a API **não** fornece a página de detalhes (essa fica no mock local).
+
 
 ## 🚀 Funcionalidades
 
@@ -154,6 +174,8 @@ ng build
 
 **Reinald Mendes**
 Desenvolvedor Backend & Fullstack
+
+🔗 LinkedIn: [https://www.linkedin.com/in/reinald-mendes/](https://www.linkedin.com/in/reinald-mendes/)
 
 🔗 LinkedIn: [https://www.linkedin.com/in/reinald-mendes/](https://www.linkedin.com/in/reinald-mendes/)
 
