@@ -13,7 +13,7 @@ A aplicação atende os requisitos do desafio:
 * Formulário reativo para criação/edição (validações: nome, e-mail, idade ≥18, pelo menos 1 permissão).
 * Página de detalhes (permits em chips e label de “idade estimada”).
 * Feedback visual: loading / snackbar / confirmação para exclusão.
-* Deploy (frontend) e instruções no README.
+* Deploy (frontend) e instruções no README..
 
 ---
 
